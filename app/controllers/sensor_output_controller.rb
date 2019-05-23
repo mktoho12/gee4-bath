@@ -11,7 +11,7 @@ class SensorOutputController < ApplicationController
 
   def latest
     latest = SensorOutput.maximum(:created_at)
-    render json: SensorOutput.find_by(created_at: latest).status
+    render json: SensorOutput.find_by(created_at: latest).display
   end
 
   def by_date
