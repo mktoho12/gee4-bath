@@ -8,7 +8,7 @@ class SensorOutput < ApplicationRecord
   end
 
   def status
-    vacant? ? '空いてる' : '誰か入ってる'
+    vacant? ? 'vacant' : 'using'
   end
 
   def display
