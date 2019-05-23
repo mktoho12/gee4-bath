@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+window.onload = () => {
+  setInterval(() => {
+  axios.get('https://gee4-bath01.herokuapp.com/')
+       .then(function (response) {
+         if(response.data.status === 'vacant') {
+          document.getElementById('using').style.display = 'none'
+          document.getElementById('vacant').style.display = 'block'
+         }
+         if(response.data.status === 'using') {
+           document.getElementById('using').style.display = 'block'
+           document.getElementById('vacant').style.display = 'none'
+         }
+       })
+      }, 1000)
+}
+    </script>
+  </head>
+  <body>
+      <div id="vacant" style="display: none">
+          <h1>お風呂は空いてます！</h1>
+          <div>
+            <img src="images/vacant.jpg" width="30%"/>
+          </div>
+        </div>
+        <div id="using" style="display: none">
+            <h1>誰かがお風呂に入っています…</h1>
+            <div>
+              <img src="images/using.jpg" width="30%"/>
+            </div>
+          </div>
+        </body>
+</html>
