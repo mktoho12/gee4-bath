@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
-  get '/', to: 'home#index'
+  get 'sensor_outputs', to: 'sensor_output#index'
+  post 'sensor_output', to: 'sensor_output#create'
+  get '/', to: 'sensor_output#latest'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
