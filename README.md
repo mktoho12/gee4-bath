@@ -1,24 +1,42 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ギークハウス新宿四ツ谷のお風呂が空いてるかどうかを取得するAPIです。
 
-Things you may want to cover:
+## 開発する
+ソースコードを取得する
+```
+git clone https://github.com/mktoho12/gee4-bath.git
+```
 
-* Ruby version
+`.env_example`ファイルをコピーして`.env`ファイルを作ります。
 
-* System dependencies
+```
+cp .env_example .env
+```
 
-* Configuration
+Dockerコンテナをビルドします。
+これは初回起動時のみでオッケーです。
 
-* Database creation
+```
+docker-compose build
+```
 
-* Database initialization
+起動します
 
-* How to run the test suite
+```
+docker-compose up
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+テーブルを作って開発用データを入れます。
+これも初回起動時のみでオッケーです。
 
-* Deployment instructions
+```
+docker-compose exec app bundle exec rails db:migrate
+docker-compose exec app bundle exec rails db:seed
+```
 
-* ...
+http://localhost:3000/ を開いて、以下のようなJSONが出力されたら準備完了です。細かいところは違うかも。
+
+```
+{"status":"using","time":"2019-05-23T14:39:02.000+09:00"}
+```
