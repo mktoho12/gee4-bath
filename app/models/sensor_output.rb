@@ -1,8 +1,12 @@
 class SensorOutput < ApplicationRecord
-  scope :latest, -> { order(created_at: :desc).limit(1).first }
+  scope :latest, ->(n = nil) {
+    order(created_at: :desc).then { |r| n.nil? ? r.first : r.limit(n) }
+  }
+
   scope :in_date, ->(date) {
     where(created_at: date.beginning_of_day..date.end_of_day)
   }
+  
   scope :order_by_time, -> { order(created_at: :asc) }
 
   def vacant?
