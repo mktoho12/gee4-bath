@@ -1,25 +1,20 @@
 class SensorOutputController < ApplicationController
   def index
-    render json: SensorOutput.order(created_at: :desc).limit(100).map(&:display)
+    render json: SensorOutput.latest(100).map(&:display)
+  end
+
+  def latest
+    render json: SensorOutput.latest.display
+  end
+
+  def by_date
+    date = Date.parse(params[:date])
+    render json: SensorOutput.in_date(date).order_by_time.map(&:display)
   end
 
   def create
     sensor_output = JSON.parse(request.body.read).reject{|k|k=='ts' || k=='id'}
     SensorOutput.create(sensor_output)
-    render json: {result: 'ok'}
-  end
-
-  def latest
-    latest = SensorOutput.maximum(:created_at)
-    render json: SensorOutput.find_by(created_at: latest).display
-  end
-
-  def by_date
-    date = params[:date]
-    from = Time.zone.parse("#{date} 000000")
-    to = Time.zone.parse("#{date} 235959")
-    render json: SensorOutput.where(created_at: from..to)
-                             .order(created_at: :asc)
-                             .map(&:display)
+    render json: { result: 'ok' }
   end
 end
