@@ -1,5 +1,5 @@
 class SensorOutput < ApplicationRecord
-  scope :latest, ->(n = 1) { order(created_at: :desc).limit(n) }
+  scope :latest, -> { order(created_at: :desc).limit(1).first }
   scope :in_date, ->(date) {
     where(created_at: date.beginning_of_day..date.end_of_day)
   }
