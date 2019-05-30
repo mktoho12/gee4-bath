@@ -3,7 +3,7 @@ class SensorOutput < ApplicationRecord
   scope :in_date, ->(date) {
     where(created_at: date.beginning_of_day..date.end_of_day)
   }
-  scope :order_by_time { order(created_at: :asc) }
+  scope :order_by_time, -> { order(created_at: :asc) }
 
   def vacant?
     a1.to_i > 2000
