@@ -6,33 +6,117 @@
     <script>
 window.onload = () => {
   setInterval(() => {
-  axios.get('https://gee4-bath01.herokuapp.com/')
-       .then(function (response) {
-         if(response.data.status === 'vacant') {
+    axios.get('https://bath.gee4.dev/')
+      .then(function (response) {
+        if(response.data.status === 'vacant') {
           document.getElementById('using').style.display = 'none'
           document.getElementById('vacant').style.display = 'block'
-         }
-         if(response.data.status === 'using') {
-           document.getElementById('using').style.display = 'block'
-           document.getElementById('vacant').style.display = 'none'
-         }
-       })
-      }, 1000)
+        }
+        if(response.data.status === 'using') {
+          document.getElementById('using').style.display = 'block'
+          document.getElementById('vacant').style.display = 'none'
+        }
+      })
+  }, 1000)
+  const renderBathTime = () => {
+    axios.get('https://bath.gee4.dev/history/today')
+      .then(function (response) {
+        const svg = document.getElementById('svg1')
+        const frame = document.getElementById('frame')
+        const bathTimes = document.getElementsByClassName('bath-time')
+        Array.from(bathTimes).forEach(bathTime => svg.removeChild(bathTime))
+        response.data.forEach(log => {
+          svg.insertBefore(bathTime(log.from, log.to), frame)
+        })
+      })
+  }
+  const createSVGNS = (elementName) => {
+    return document.createElementNS('http://www.w3.org/2000/svg', elementName)
+  }
+  const createRect = ({x, y, w, h, stroke='none', fill='none', strokeWidth=1, clazz, id} = {}) => {
+    const rect = createSVGNS('rect')
+    rect.setAttribute('x', x)
+    rect.setAttribute('y', y)
+    rect.setAttribute('width', w)
+    rect.setAttribute('height', h)
+    rect.setAttribute('stroke', stroke)
+    rect.setAttribute('fill', fill)
+    rect.setAttribute('stroke-width', strokeWidth)
+    rect.setAttribute('class', clazz)
+    rect.setAttribute('id', id)
+    return rect
+  }
+  const bathTime = (from, to) => {
+    const [fromHour, fromMin] = from.match(/\d{2}/g)
+    const [toHour, toMin] = to.match(/\d{2}/g)
+    y = fromHour * 30 + fromMin / 2
+    h = toHour * 30 + toMin / 2 - y
+    return createRect({x:38, y:y, w:200, h:h, fill:'cyan', strokeWidth: 0, clazz:'bath-time'})
+  }
+  const createLine = ({x1, y1, x2, y2, stroke, strokeDasharray} = {}) => {
+    const line = createSVGNS('line')
+    line.setAttribute('x1', x1)
+    line.setAttribute('y1', y1)
+    line.setAttribute('x2', x2)
+    line.setAttribute('y2', y2)
+    line.setAttribute('stroke', stroke)
+    line.setAttribute('stroke-dasharray', strokeDasharray)
+    return line
+  }
+  const breakDotLine = (n) => {
+    const y = 30 * n
+    return createLine({x1:38, y1:y, x2:238, y2:y, stroke:'black', strokeDasharray: 2})
+  }
+  const createSVGText = ({x, y, stroke, fontSize, body} = {}) => {
+    const text = createSVGNS('text')
+    text.setAttribute('x', x)
+    text.setAttribute('y', y)
+    text.setAttribute('stroke', stroke)
+    text.setAttribute('font-size', fontSize)
+    if(body) {
+      const textNode = document.createTextNode(body)
+      text.appendChild(textNode)
+    }
+    return text
+  }
+  const timeText = hour => {
+    const y = hour * 30 + 5
+    const body = hour + ':00'
+    return createSVGText({x:0, y:y, stroke:'black', fontSize:12, body:body})
+  }
+
+  const svg = document.getElementById('svg1')
+  const frame = createRect({x:38, y:0, w:200, h:720, fill:'none', stroke:'black', strokeWidth:1, id:'frame'})
+  svg.appendChild(frame)
+  for(let i=1; i<=23; i++) {
+    svg.appendChild(breakDotLine(i))
+    svg.appendChild(timeText(i))
+  }
+  renderBathTime()
+  setInterval(() => { renderBathTime() }, 2 * 60 * 1000 /*2min*/)
 }
     </script>
   </head>
   <body>
-      <div id="vacant" style="display: none">
-          <h1>お風呂は空いてます！</h1>
-          <div>
-            <img src="images/vacant.jpg" width="30%"/>
-          </div>
-        </div>
-        <div id="using" style="display: none">
-            <h1>誰かがお風呂に入っています…</h1>
-            <div>
-              <img src="images/using.jpg" width="30%"/>
-            </div>
-          </div>
-        </body>
+    <div style="width: 400px; height: 600px; float:left;">
+    <div id="vacant" style="display: none">
+      <h1>お風呂は空いてます！</h1>
+      <div>
+        <img src="images/vacant.jpg" width="100%"/>
+      </div>
+    </div>
+    <div id="using" style="display: none">
+      <h1>誰かがお風呂に入っています…</h1>
+      <div>
+        <img src="images/using.jpg" width="100%"/>
+      </div>
+    </div>
+    </div>
+    <div style="width: 300px; float:left; padding-left: 30px;">
+      <h1>ログ</h1>
+      <svg id="svg1" width="250" height="720" xmlns="http://www.w3.org/2000/svg">
+      </svg>
+    </div>
+  </div>
+  </body>
 </html>

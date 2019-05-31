@@ -17,4 +17,17 @@ class SensorOutputController < ApplicationController
     SensorOutput.create(sensor_output)
     render json: { result: 'ok' }
   end
+
+  def history
+    date = Date.parse(params[:date])
+    render json: SensorOutput.history(date)
+  end
+
+  def history_today
+    render json: SensorOutput.history(Date.current)
+  end
+
+  def history_yesterday
+    render json: SensorOutput.history(Date.current.yesterday)
+  end
 end

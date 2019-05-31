@@ -9,6 +9,22 @@ class SensorOutput < ApplicationRecord
   
   scope :order_by_time, -> { order(created_at: :asc) }
 
+  def self.history(date)
+    in_date(date)
+      .map { |log| BathLog.new(status: log.status, from: log.created_at) }
+      .inject([]) { |l, r|
+        if l.empty?
+          [r]
+        elsif l.last.status == r.status
+          l
+        else
+          l.last.to = r.from
+          l + [r]
+        end
+      }
+      .select(&:using?).map(&:hash_as_time)
+  end
+
   def vacant?
     a1.to_i > 2000
   end
