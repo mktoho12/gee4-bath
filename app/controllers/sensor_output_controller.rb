@@ -13,7 +13,8 @@ class SensorOutputController < ApplicationController
   end
 
   def create
-    sensor_output = JSON.parse(request.body.read).reject{|k|k=='ts' || k=='id'}
+    sensor_output = JSON.parse(request.body.read)
+                        .select { |k| ['ba', 'a1'].include? k }
     SensorOutput.create(sensor_output)
     render json: { result: 'ok' }
   end

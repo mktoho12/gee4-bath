@@ -10,23 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_021514) do
-
-  create_table "first", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "id"
-    t.string "name", limit: 10
-  end
+ActiveRecord::Schema.define(version: 2019_06_10_123531) do
 
   create_table "sensor_outputs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "rc"
-    t.string "lq"
-    t.string "ct"
-    t.string "ed"
     t.string "ba"
     t.string "a1"
-    t.string "a2"
-    t.string "p0"
-    t.string "p1"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
