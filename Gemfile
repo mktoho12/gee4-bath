@@ -41,6 +41,8 @@ group :development do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-doc'
+  # for security alert
+  gem 'yard', '>= 0.9.20'
 end
 
 
