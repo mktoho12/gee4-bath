@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   get '/history/today', to: 'sensor_output#history_today'
   get '/history/yesterday', to: 'sensor_output#history_yesterday'
   get '/history/:date', to: 'sensor_output#history', date: /\d{8}/
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
