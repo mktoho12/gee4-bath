@@ -5,7 +5,8 @@ RUN apt-get update \
     build-essential \
     libpq-dev \
     nodejs \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && gem install bundler
 
 ENV APP_ROOT /app
 RUN mkdir $APP_ROOT
