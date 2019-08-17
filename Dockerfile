@@ -1,11 +1,12 @@
-FROM ruby:2.6.2
+FROM ruby:2.6.3
 
 RUN apt-get update \
   && apt-get install -y \
     build-essential \
     libpq-dev \
     nodejs \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && gem install bundler
 
 ENV APP_ROOT /app
 RUN mkdir $APP_ROOT

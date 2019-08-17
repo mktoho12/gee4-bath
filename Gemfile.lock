@@ -126,11 +126,6 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.5)
     railties (6.0.0)
       actionpack (= 6.0.0)
       activesupport (= 6.0.0)
@@ -168,24 +163,21 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootsnap (>= 1.1.0)
+  bootsnap (>= 1.4.2)
   byebug
   listen (>= 3.0.5, < 3.2)
-  mysql2 (>= 0.4.4, < 0.6.0)
+  mysql2 (>= 0.4.4)
   pry-byebug
   pry-doc
   pry-rails
   puma (~> 3.11)
   rack-cors
   rails (~> 6.0.0)
-  rails_12factor
   spring
   spring-watcher-listen (~> 2.0.0)
-  tzinfo-data
-  yard (>= 0.9.20)
 
 RUBY VERSION
-   ruby 2.6.2p47
+   ruby 2.6.3p62
 
 BUNDLED WITH
-   1.17.2
+   2.0.2
