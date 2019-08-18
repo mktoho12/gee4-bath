@@ -13,6 +13,7 @@ services:
     environment:
       - MYSQL_USER
       - MYSQL_PASSWORD
+      - TZ=Asia/Tokyo
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
