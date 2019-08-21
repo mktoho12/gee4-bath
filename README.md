@@ -1,4 +1,6 @@
-# README
+
+# gee4-bath-api
+[![Gitter](https://badges.gitter.im/mktoho12/gee4-bath-api.svg)](https://gitter.im/mktoho12/gee4-bath-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ギークハウス新宿四ツ谷のお風呂が空いてるかどうかを取得するAPIです。
 
