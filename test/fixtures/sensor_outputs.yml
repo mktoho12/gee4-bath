@@ -1,23 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  rc: MyString
-  lq: MyString
-  ct: MyString
-  ed: MyString
   ba: MyString
   a1: MyString
-  a2: MyString
-  p0: MyString
-  p1: MyString
 
 two:
-  rc: MyString
-  lq: MyString
-  ct: MyString
-  ed: MyString
   ba: MyString
   a1: MyString
-  a2: MyString
-  p0: MyString
-  p1: MyString
